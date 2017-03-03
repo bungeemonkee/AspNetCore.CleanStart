@@ -6,33 +6,64 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.CleanStart
 {
+    /// <summary>
+    /// Wraps .Net Core MVC server creation and execution.
+    /// </summary>
+    /// <typeparam name="TStartup">The configuration type for the server instance.</typeparam>
     public class Server<TStartup> where TStartup : Startup
     {
+        /// <summary>
+        /// The URLs given to the server to listen on.
+        /// </summary>
         public readonly string[] Urls;
 
+        /// <summary>
+        /// Creates a server instance with URLs to listen on.
+        /// </summary>
+        /// <param name="urls">The URLs to listen on.</param>
         public Server(params string[] urls)
         {
             Urls = urls;
         }
 
+        /// <summary>
+        /// Run the server synchronously. Wait for a Ctrl-C to exit.
+        /// </summary>
         public void Run()
         {
             RunInternal(CancellationToken.None);
         }
 
+        /// <summary>
+        /// Run the server synchronously. Wait for notification from the given token to exit.
+        /// </summary>
         public void Run(CancellationToken token)
         {
             RunInternal(token);
         }
 
+        /// <summary>
+        /// Run the server as a task. Wait for a Ctrl-C to exit.
+        /// </summary>
         public Task RunAsync()
         {
             return Task.Run(() => RunInternal(CancellationToken.None));
         }
 
+        /// <summary>
+        /// Run the server as a task. Wait for notification from the given token to exit.
+        /// </summary>
         public Task RunAsync(CancellationToken token)
         {
             return Task.Run(() => RunInternal(token));
+        }
+
+        /// <summary>
+        /// Apply additional configuration to the web host with the given <see cref="IWebHostBuilder"/>.
+        /// </summary>
+        /// <param name="hostBuilder">The <see cref="IWebHostBuilder"/> used to configure the web host.</param>
+        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder)
+        {
         }
 
         private void RunInternal(CancellationToken token)
@@ -75,10 +106,6 @@ namespace AspNetCore.CleanStart
                 // Run the server with a token to tell it when to quit
                 host.Run(token);
             }
-        }
-
-        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder)
-        {
         }
     }
 }

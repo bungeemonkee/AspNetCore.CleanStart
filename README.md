@@ -17,3 +17,11 @@ The primary public api provides two classes: `AspNetCore.CleanStart.Server`, and
 `AspNetCore.CleanStart.Server` creates an object that can begin running the server in numerous ways. It takes a subclass of `AspNetCore.CleanStart.Startup` a a type parameter and the list of urls to bind the server to as a constructor parameter.
 
 `AspNetCore.CleanStart.Startup` is a base class that provides a cleaner startup api. It can be used as is for a simple MVC application provided that application uses attribute routing. Alternatively, it can be used as the base class for a more advanced startup configuration.
+
+Each of these classes provides several virtual methods that can be overridden to apply custom configuration.
+
+## Compromises
+
+Several compromises have been made to work around the basic .NET Core configuration mechanisms.
+
+Primarily the pattern of using overridable `protected virtual void Configure[SOMETHING] (...)` methods, while providing a cleaner more readily understandable interface, still does not allow for true dependency injection from the first line of code.
