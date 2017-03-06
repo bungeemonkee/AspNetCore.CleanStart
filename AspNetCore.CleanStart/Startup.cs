@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.CleanStart
 {
@@ -80,7 +81,14 @@ namespace AspNetCore.CleanStart
             var mvc = services.AddMvc(ConfigureMvcOptions);
             ConfigureMvc(mvc);
 
-            return services.BuildServiceProvider();
+            services.AddLogging();
+
+            var provider = services.BuildServiceProvider();
+
+            var logging = provider.GetService<ILoggerFactory>();
+            ConfigureLogging(logging);
+
+            return provider;
         }
 
         /// <summary>
@@ -149,6 +157,19 @@ namespace AspNetCore.CleanStart
         /// <param name="routeBuilder">The route builder to setup MVC routes.</param>
         protected virtual void ConfigureRouting(IRouteBuilder routeBuilder)
         {
+        }
+
+        /// <summary>
+        /// Configures logging.
+        /// </summary>
+        /// <remarks>
+        /// Called by <see cref="ConfigureServices"/> after building the <see cref="IServiceProvider"/>.
+        /// </remarks>
+        /// <param name="loggerFactory">The logger factory to configure.</param>
+        protected virtual void ConfigureLogging(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
     }
 }
