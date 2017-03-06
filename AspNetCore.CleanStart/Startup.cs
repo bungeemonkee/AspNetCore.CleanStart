@@ -47,7 +47,7 @@ namespace AspNetCore.CleanStart
             var type = GetType();
             if (type != typeof(Startup))
             {
-                Environment.ApplicationName = type.GetTypeInfo().Assembly.FullName;
+                Environment.ApplicationName = type.GetTypeInfo().Assembly.GetName().Name;
             }
         }
 
@@ -92,7 +92,7 @@ namespace AspNetCore.CleanStart
         /// </remarks>
         /// <param name="configurationBuilder">A <see cref="ConfigurationBinder"/> for constructing the configuration.</param>
         /// <returns>The <see cref="IConfigurationRoot"/> instance.</returns>
-        public virtual IConfigurationRoot ConfigureConfiguration(ConfigurationBuilder configurationBuilder)
+        protected virtual IConfigurationRoot ConfigureConfiguration(ConfigurationBuilder configurationBuilder)
         {
             return configurationBuilder.SetBasePath(Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -109,7 +109,7 @@ namespace AspNetCore.CleanStart
         /// Calls <see cref="MvcApplicationBuilderExtensions.UseMvc(IApplicationBuilder,Action{IRouteBuilder})"/> with <see cref="ConfigureRouting"/>.
         /// </remarks>
         /// <param name="applicationBuilder">The <see cref="IApplicationBuilder"/> used to configure the application.</param>
-        public virtual void ConfigureApplication(IApplicationBuilder applicationBuilder)
+        protected virtual void ConfigureApplication(IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseMvc(ConfigureRouting);
         }

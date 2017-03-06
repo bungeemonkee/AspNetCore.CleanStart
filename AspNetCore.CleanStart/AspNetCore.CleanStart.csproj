@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
+    <Authors>David Love</Authors>
+    <Company />
+    <Description>A simple library intended to clean up the start code for .NET Core MVC applications.</Description>
+    <PackageProjectUrl>https://github.com/bungeemonkee/AspNetCore.CleanStart</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/bungeemonkee/AspNetCore.CleanStart/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/bungeemonkee/AspNetCore.CleanStart</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>net core, asp net core, start, startup, start-up, start up, initialization, init</PackageTags>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.0-alpha01</Version>
   </PropertyGroup>
 
   <ItemGroup>
