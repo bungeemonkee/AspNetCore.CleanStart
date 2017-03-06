@@ -15,7 +15,10 @@ environment:
     secure: R+WyOGR6nZ7gnmdlkiWX7fOVOvwCtPIMCKQjfoBRpTKDgXqzw3YZT1/Ivia1B/X6
 
 before_build:
-- cmd: _build\restore.bat
+- cmd: >-
+    _build\version.bat
+    
+    _build\restore.bat
     
 build_script:
 - cmd: _build\build.bat
