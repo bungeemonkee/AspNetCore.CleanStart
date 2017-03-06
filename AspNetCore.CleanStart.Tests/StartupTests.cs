@@ -12,7 +12,9 @@ namespace AspNetCore.CleanStart.Tests
         [TestMethod]
         public void Constructor_Saves_Environment()
         {
-            var name = typeof(StartupWrapper).GetTypeInfo().Assembly.GetName().Name;
+            var name = typeof(StartupWrapper).GetTypeInfo()
+                .Assembly.GetName()
+                .Name;
 
             var environment = new Mock<IHostingEnvironment>();
             environment.SetupAllProperties();

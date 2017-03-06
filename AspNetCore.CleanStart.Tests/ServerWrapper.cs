@@ -2,14 +2,12 @@
 
 namespace AspNetCore.CleanStart.Tests
 {
-    public class ServerWrapper : Server<Startup>
+    public class ServerWrapper: Server<Startup>
     {
-        public bool ConfigureHostCalled { get; private set; }
-
         public ServerWrapper(string[] urls)
-            : base(urls)
-        {
-        }
+            : base(urls) {}
+
+        public bool ConfigureHostCalled { get; private set; }
 
         protected override void ConfigureHost(IWebHostBuilder hostBuilder)
         {

@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AspNetCore.CleanStart
 {
     /// <summary>
-    /// Wraps .Net Core MVC server creation and execution.
+    ///     Wraps .Net Core MVC server creation and execution.
     /// </summary>
     /// <typeparam name="TStartup">The configuration type for the server instance.</typeparam>
-    public class Server<TStartup> where TStartup : Startup
+    public class Server<TStartup>
+        where TStartup: Startup
     {
         /// <summary>
-        /// The URLs given to the server to listen on.
+        ///     The URLs given to the server to listen on.
         /// </summary>
         public readonly string[] Urls;
 
         /// <summary>
-        /// Creates a server instance with URLs to listen on.
+        ///     Creates a server instance with URLs to listen on.
         /// </summary>
         /// <param name="urls">The URLs to listen on.</param>
         public Server(params string[] urls)
@@ -27,7 +28,7 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
-        /// Run the server synchronously. Wait for a Ctrl-C to exit.
+        ///     Run the server synchronously. Wait for a Ctrl-C to exit.
         /// </summary>
         public void Run()
         {
@@ -35,7 +36,7 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
-        /// Run the server synchronously. Wait for notification from the given token to exit.
+        ///     Run the server synchronously. Wait for notification from the given token to exit.
         /// </summary>
         public void Run(CancellationToken token)
         {
@@ -43,7 +44,7 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
-        /// Run the server as a task. Wait for a Ctrl-C to exit.
+        ///     Run the server as a task. Wait for a Ctrl-C to exit.
         /// </summary>
         public Task RunAsync()
         {
@@ -51,7 +52,7 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
-        /// Run the server as a task. Wait for notification from the given token to exit.
+        ///     Run the server as a task. Wait for notification from the given token to exit.
         /// </summary>
         public Task RunAsync(CancellationToken token)
         {
@@ -59,20 +60,16 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
-        /// Apply additional configuration to the web host with the given <see cref="IWebHostBuilder"/>.
+        ///     Apply additional configuration to the web host with the given <see cref="IWebHostBuilder" />.
         /// </summary>
-        /// <param name="hostBuilder">The <see cref="IWebHostBuilder"/> used to configure the web host.</param>
-        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder)
-        {
-        }
+        /// <param name="hostBuilder">The <see cref="IWebHostBuilder" /> used to configure the web host.</param>
+        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder) {}
 
         private void RunInternal(CancellationToken token)
         {
             // Find the directory of the configuration assembly
-            var path = typeof(TStartup)
-                .GetTypeInfo()
-                .Assembly
-                .Location;
+            var path = typeof(TStartup).GetTypeInfo()
+                .Assembly.Location;
             path = Path.GetDirectoryName(path);
 
             // Construct the web host with:
@@ -81,8 +78,7 @@ namespace AspNetCore.CleanStart
             // * Set the webserver root and content path to the content folder
             // * Setup environment variables for IIS integration
             // * Set the startup class to Startup
-            var hostBuilder = new WebHostBuilder()
-                .UseKestrel()
+            var hostBuilder = new WebHostBuilder().UseKestrel()
                 .UseUrls(Urls)
                 .UseWebRoot(path)
                 .UseContentRoot(path)

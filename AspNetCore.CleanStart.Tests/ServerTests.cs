@@ -1,9 +1,5 @@
-using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace AspNetCore.CleanStart.Tests
 {
@@ -29,7 +25,10 @@ namespace AspNetCore.CleanStart.Tests
         {
             const string url = "http://test.ing";
 
-            var server = new ServerWrapper(new[] { url });
+            var server = new ServerWrapper(new[]
+            {
+                url
+            });
 
             var cancelSource = new CancellationTokenSource();
 
@@ -54,12 +53,19 @@ namespace AspNetCore.CleanStart.Tests
         {
             const string url = "http://test.ing";
 
-            var server = new ServerWrapper(new[] { url });
+            var server = new ServerWrapper(new[]
+            {
+                url
+            });
 
             var cancelSource = new CancellationTokenSource();
 
             // Create a new task to test the server in
-            var thread = new Thread(() => { server.RunAsync(cancelSource.Token).Wait(); });
+            var thread = new Thread(() =>
+            {
+                server.RunAsync(cancelSource.Token)
+                    .Wait();
+            });
             thread.Start();
 
             // Wait for a second for the server to really start
