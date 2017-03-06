@@ -11,7 +11,7 @@ namespace AspNetCore.CleanStart
     /// </summary>
     /// <typeparam name="TStartup">The configuration type for the server instance.</typeparam>
     public class Server<TStartup>
-        where TStartup: Startup
+        where TStartup : Startup
     {
         /// <summary>
         ///     The URLs given to the server to listen on.
@@ -63,7 +63,7 @@ namespace AspNetCore.CleanStart
         ///     Apply additional configuration to the web host with the given <see cref="IWebHostBuilder" />.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="IWebHostBuilder" /> used to configure the web host.</param>
-        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder) {}
+        protected virtual void ConfigureHost(IWebHostBuilder hostBuilder) { }
 
         private void RunInternal(CancellationToken token)
         {
@@ -79,11 +79,15 @@ namespace AspNetCore.CleanStart
             // * Setup environment variables for IIS integration
             // * Set the startup class to Startup
             var hostBuilder = new WebHostBuilder().UseKestrel()
-                .UseUrls(Urls)
                 .UseWebRoot(path)
                 .UseContentRoot(path)
                 .UseIISIntegration()
                 .UseStartup<TStartup>();
+
+            if (Urls != null && Urls.Length > 0)
+            {
+                hostBuilder.UseUrls(Urls);
+            }
 
             // Apply additional host configuration
             ConfigureHost(hostBuilder);
