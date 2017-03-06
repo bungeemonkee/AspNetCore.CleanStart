@@ -83,7 +83,7 @@ namespace AspNetCore.CleanStart
                 .UseWebRoot(path)
                 .UseContentRoot(path)
                 .UseIISIntegration()
-                .UseStartup<Startup>();
+                .UseStartup<TStartup>();
 
             // Apply additional host configuration
             ConfigureHost(hostBuilder);
