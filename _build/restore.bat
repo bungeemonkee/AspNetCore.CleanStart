@@ -2,6 +2,6 @@
 set scripts=%~dp0
 set scripts=%scripts:~0,-1%
 
-set solution=AspNetCore.CleanStart.sln
+set solution=%1%.sln
 
 dotnet restore %solution%

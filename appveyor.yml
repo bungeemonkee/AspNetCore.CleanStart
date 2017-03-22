@@ -3,6 +3,8 @@ init:
 
 version: '{branch}-{build}'
 
+image: Visual Studio 2017
+
 skip_tags: true
 
 configuration: Release
@@ -16,18 +18,18 @@ environment:
 
 before_build:
 - cmd: >-
-    _build\version.bat
+    _build\version.bat AspNetCore.CleanStart
     
-    _build\restore.bat
+    _build\restore.bat AspNetCore.CleanStart
     
 build_script:
-- cmd: _build\build.bat
+- cmd: _build\build.bat AspNetCore.CleanStart
 
 test_script:
-- cmd: _build\test.bat
+- cmd: _build\test.bat AspNetCore.CleanStart
 
 after_test:
-- cmd: _build\package.bat
+- cmd: _build\package.bat AspNetCore.CleanStart
 
 artifacts:
 - path: '*.nupkg'
