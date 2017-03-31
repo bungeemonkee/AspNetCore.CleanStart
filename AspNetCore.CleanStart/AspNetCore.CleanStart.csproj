@@ -10,9 +10,9 @@
     <RepositoryUrl>https://github.com/bungeemonkee/AspNetCore.CleanStart</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>net core, asp net core, start, startup, start-up, start up, initialization, init</PackageTags>
-    <AssemblyVersion>1.0.0.4</AssemblyVersion>
-    <FileVersion>1.0.0.4</FileVersion>
-    <Version>1.0.0-alpha04</Version>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+    <Version>1.0.0-alpha05</Version>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
