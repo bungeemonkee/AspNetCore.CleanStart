@@ -23,15 +23,25 @@ namespace AspNetCore.CleanStart
         /// The instance of the startup class.
         /// If this is not given in the constructor it is null.
         /// </summary>
-        protected readonly TStartup Startup;
+        public readonly TStartup Startup;
+
+        /// <summary>
+        /// The web (static file) root. By default the current directory plus "wwwroot";
+        /// </summary>
+        public virtual string WebRoot { get; protected set; }
+
+        /// <summary>
+        ///  The content root. By default the current directory;
+        /// </summary>
+        public virtual string ContentRoot { get; protected set; }
 
         /// <summary>
         ///     Creates a server instance with URLs to listen on.
         /// </summary>
         /// <param name="urls">The URLs to listen on.</param>
         public Server(params string[] urls)
+            : this(null, urls)
         {
-            Urls = urls;
         }
 
         /// <summary>
@@ -39,8 +49,8 @@ namespace AspNetCore.CleanStart
         /// </summary>
         /// <param name="startup">The startup class instance.</param>
         public Server(TStartup startup)
+            : this(startup, null)
         {
-            Startup = startup;
         }
 
         /// <summary>
@@ -52,6 +62,9 @@ namespace AspNetCore.CleanStart
         {
             Startup = startup;
             Urls = urls;
+
+            ContentRoot = Directory.GetCurrentDirectory();
+            WebRoot = Path.Combine(ContentRoot, "wwwroot");
         }
 
         /// <summary>
@@ -94,20 +107,16 @@ namespace AspNetCore.CleanStart
 
         private void RunInternal(CancellationToken token)
         {
-            // Find the directory of the configuration assembly
-            var path = typeof(TStartup).GetTypeInfo()
-                .Assembly.Location;
-            path = Path.GetDirectoryName(path);
 
             // Construct the web host with:
             // * Kestrel as the webserver
             // * Listen on the configured url
-            // * Set the webserver root and content path to the content folder
+            // * Set the webserver root and content path
             // * Setup environment variables for IIS integration
             // * Set the startup class to TStartup
             var hostBuilder = new WebHostBuilder().UseKestrel()
-                .UseWebRoot(path)
-                .UseContentRoot(path)
+                .UseWebRoot(WebRoot)
+                .UseContentRoot(ContentRoot)
                 .UseIISIntegration()
                 .UseStartup<TStartup>();
 
