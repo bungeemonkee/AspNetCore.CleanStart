@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCore.CleanStart
 {
@@ -19,11 +20,37 @@ namespace AspNetCore.CleanStart
         public readonly string[] Urls;
 
         /// <summary>
+        /// The instance of the startup class.
+        /// If this is not given in the constructor it is null.
+        /// </summary>
+        protected readonly TStartup Startup;
+
+        /// <summary>
         ///     Creates a server instance with URLs to listen on.
         /// </summary>
         /// <param name="urls">The URLs to listen on.</param>
         public Server(params string[] urls)
         {
+            Urls = urls;
+        }
+
+        /// <summary>
+        /// Create a <see cref="Server{TStartup}"/> with the given startup instance.
+        /// </summary>
+        /// <param name="startup">The startup class instance.</param>
+        public Server(TStartup startup)
+        {
+            Startup = startup;
+        }
+
+        /// <summary>
+        /// Create a <see cref="Server{TStartup}"/> with the given startup instance.
+        /// </summary>
+        /// <param name="startup">The startup class instance.</param>
+        /// <param name="urls">The URLs to listen on.</param>
+        public Server(TStartup startup, params string[] urls)
+        {
+            Startup = startup;
             Urls = urls;
         }
 
@@ -77,13 +104,24 @@ namespace AspNetCore.CleanStart
             // * Listen on the configured url
             // * Set the webserver root and content path to the content folder
             // * Setup environment variables for IIS integration
-            // * Set the startup class to Startup
+            // * Set the startup class to TStartup
             var hostBuilder = new WebHostBuilder().UseKestrel()
                 .UseWebRoot(path)
                 .UseContentRoot(path)
                 .UseIISIntegration()
                 .UseStartup<TStartup>();
 
+            // Set the startup - either by class or instance
+            if (Startup != null)
+            {
+                hostBuilder.ConfigureServices(x => x.AddSingleton<IStartup>(Startup));
+            }
+            else
+            {
+                hostBuilder.UseStartup<TStartup>();
+            }
+
+            // Set the urls to listen on
             if (Urls != null && Urls.Length > 0)
             {
                 hostBuilder.UseUrls(Urls);
@@ -109,3 +147,4 @@ namespace AspNetCore.CleanStart
         }
     }
 }
+

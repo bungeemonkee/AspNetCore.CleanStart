@@ -21,6 +21,20 @@ namespace AspNetCore.CleanStart.Tests
         }
 
         [TestMethod]
+        public void Constructor_Saves_Startup()
+        {
+            const string url = "http://test.ing";
+
+            var server = new Server<Startup>(url);
+
+            var result = server.Urls;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(url, result[0]);
+        }
+
+        [TestMethod]
         public void Run_Calls_ConfigureHost()
         {
             const string url = "http://test.ing";
