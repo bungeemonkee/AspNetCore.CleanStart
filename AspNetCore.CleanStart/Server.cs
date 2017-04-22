@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCore.CleanStart
@@ -105,6 +106,12 @@ namespace AspNetCore.CleanStart
         /// <param name="hostBuilder">The <see cref="IWebHostBuilder" /> used to configure the web host.</param>
         protected virtual void ConfigureHost(IWebHostBuilder hostBuilder) { }
 
+        /// <summary>
+        ///     Apply additional configuration to the kestrel server with the given <see cref="KestrelServerOptions"/>.
+        /// </summary>
+        /// <param name="kestrelServerOptions">The <see cref="KestrelServerOptions"/> to configure.</param>
+        protected virtual void ConfigureKestrel(KestrelServerOptions kestrelServerOptions) { }
+
         private void RunInternal(CancellationToken token)
         {
 
@@ -114,7 +121,7 @@ namespace AspNetCore.CleanStart
             // * Set the webserver root and content path
             // * Setup environment variables for IIS integration
             // * Set the startup class to TStartup
-            var hostBuilder = new WebHostBuilder().UseKestrel()
+            var hostBuilder = new WebHostBuilder().UseKestrel(ConfigureKestrel)
                 .UseWebRoot(WebRoot)
                 .UseContentRoot(ContentRoot)
                 .UseIISIntegration()
