@@ -132,7 +132,7 @@ namespace AspNetCore.CleanStart
         ///     Called by <see cref="ConfigureServices" />.
         /// </remarks>
         /// <param name="mvcBuilder">The <see cref="IMvcBuilder" /> used to configure MVC services.</param>
-        protected virtual void ConfigureMvc(IMvcBuilder mvcBuilder) {}
+        protected virtual void ConfigureMvc(IMvcBuilder mvcBuilder) { }
 
         /// <summary>
         ///     Configures options for the MVC services.
@@ -142,7 +142,7 @@ namespace AspNetCore.CleanStart
         ///     <see cref="ConfigureServices" />.
         /// </remarks>
         /// <param name="mvcOptions">The <see cref="MvcOptions" /> instance to configure.</param>
-        protected virtual void ConfigureMvcOptions(MvcOptions mvcOptions) {}
+        protected virtual void ConfigureMvcOptions(MvcOptions mvcOptions) { }
 
         /// <summary>
         ///     Configures options for MVC routing.
@@ -157,7 +157,7 @@ namespace AspNetCore.CleanStart
         ///     </para>
         /// </remarks>
         /// <param name="routeBuilder">The route builder to setup MVC routes.</param>
-        protected virtual void ConfigureRouting(IRouteBuilder routeBuilder) {}
+        protected virtual void ConfigureRouting(IRouteBuilder routeBuilder) { }
 
         /// <summary>
         ///     Configures logging.

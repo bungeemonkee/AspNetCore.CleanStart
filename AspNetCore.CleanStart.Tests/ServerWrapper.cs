@@ -5,7 +5,7 @@ namespace AspNetCore.CleanStart.Tests
     public class ServerWrapper: Server<Startup>
     {
         public ServerWrapper(string[] urls)
-            : base(urls) {}
+            : base(urls) { }
 
         public bool ConfigureHostCalled { get; private set; }
 

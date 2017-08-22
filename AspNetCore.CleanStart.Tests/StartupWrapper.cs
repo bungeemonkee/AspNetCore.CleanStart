@@ -6,7 +6,7 @@ namespace AspNetCore.CleanStart.Tests
     public class StartupWrapper: Startup
     {
         public StartupWrapper(IHostingEnvironment environment)
-            : base(environment) {}
+            : base(environment) { }
 
         public IHostingEnvironment EnvironmentPublic => Environment;
 

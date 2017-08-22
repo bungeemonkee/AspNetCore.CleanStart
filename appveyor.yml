@@ -28,7 +28,7 @@ build_script:
 - cmd: _build\build.bat AspNetCore.CleanStart
 
 test_script:
-- cmd: _build\test.bat AspNetCore.CleanStart netcoreapp1.1
+- cmd: _build\test.bat AspNetCore.CleanStart netcoreapp2.0
 
 after_test:
 - cmd: _build\package.bat AspNetCore.CleanStart
