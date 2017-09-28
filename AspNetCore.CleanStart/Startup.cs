@@ -80,17 +80,13 @@ namespace AspNetCore.CleanStart
         /// <returns>The <see cref="IServiceCollection" /> for the application.</returns>
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(ConfigureLogging);
+
             var mvc = services.AddMvc(ConfigureMvcOptions);
+
             ConfigureMvc(mvc);
 
-            services.AddLogging();
-
-            var provider = services.BuildServiceProvider();
-
-            var logging = provider.GetService<ILoggerFactory>();
-            ConfigureLogging(logging);
-
-            return provider;
+            return services.BuildServiceProvider();
         }
 
         /// <summary>
@@ -165,11 +161,14 @@ namespace AspNetCore.CleanStart
         /// <remarks>
         ///     Called by <see cref="ConfigureServices" /> after building the <see cref="IServiceProvider" />.
         /// </remarks>
-        /// <param name="loggerFactory">The logger factory to configure.</param>
-        protected virtual void ConfigureLogging(ILoggerFactory loggerFactory)
+        /// <param name="loggingBuilder">The <see cref="ILoggingBuilder"/> to configure.</param>
+        protected virtual void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            var configuration = Configuration.GetSection("Logging");
+
+            loggingBuilder.AddConfiguration(configuration);
+            loggingBuilder.AddConsole();
+            loggingBuilder.AddDebug();
         }
     }
 }
