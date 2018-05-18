@@ -1,5 +1,9 @@
+using System;
+using System.IO;
 using System.Threading;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace AspNetCore.CleanStart.Tests
 {
@@ -47,7 +51,19 @@ namespace AspNetCore.CleanStart.Tests
             var cancelSource = new CancellationTokenSource();
 
             // Create a new task to test the server in
-            var thread = new Thread(() => { server.Run(cancelSource.Token); });
+            Exception exception = null;
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    server.RunAsync(cancelSource.Token)
+                        .Wait();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            });
             thread.Start();
 
             // Wait for a second for the server to really start
@@ -58,6 +74,12 @@ namespace AspNetCore.CleanStart.Tests
 
             // Wait for the thread to end, max: 10 seconds
             thread.Join(10000);
+
+            // Re-throw any exception that occurred
+            if (exception != null)
+            {
+                throw new Exception(exception.Message, exception);
+            }
 
             Assert.IsTrue(server.ConfigureHostCalled);
         }
@@ -75,10 +97,18 @@ namespace AspNetCore.CleanStart.Tests
             var cancelSource = new CancellationTokenSource();
 
             // Create a new task to test the server in
+            Exception exception = null;
             var thread = new Thread(() =>
             {
-                server.RunAsync(cancelSource.Token)
-                    .Wait();
+                try
+                {
+                    server.RunAsync(cancelSource.Token)
+                        .Wait();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
             });
             thread.Start();
 

@@ -94,17 +94,21 @@ namespace AspNetCore.CleanStart
         /// </summary>
         public async Task RunAsync(CancellationToken token)
         {
+            var name = typeof(TStartup).Assembly.GetName().Name;
+
             // Construct the web host with:
             // * Kestrel as the webserver
             // * Listen on the configured url
             // * Set the webserver root and content path
             // * Setup environment variables for IIS integration
-            // * Set the startup class to TStartup
-            var hostBuilder = new WebHostBuilder().UseKestrel(ConfigureKestrel)
+            // * Set the application name
+            var hostBuilder = new WebHostBuilder()
+                .UseKestrel(ConfigureKestrel)
                 .UseWebRoot(WebRoot)
                 .UseContentRoot(ContentRoot)
                 .UseIISIntegration()
                 .UseStartup<TStartup>();
+                .UseSetting(WebHostDefaults.ApplicationKey, name);
 
             // Set the startup - either by class or instance
             if (Startup != null) hostBuilder.ConfigureServices(x => x.AddSingleton<IStartup>(Startup));
