@@ -107,15 +107,23 @@ namespace AspNetCore.CleanStart
                 .UseWebRoot(WebRoot)
                 .UseContentRoot(ContentRoot)
                 .UseIISIntegration()
-                .UseStartup<TStartup>();
                 .UseSetting(WebHostDefaults.ApplicationKey, name);
 
             // Set the startup - either by class or instance
-            if (Startup != null) hostBuilder.ConfigureServices(x => x.AddSingleton<IStartup>(Startup));
-            else hostBuilder.UseStartup<TStartup>();
+            if (Startup != null)
+            {
+                hostBuilder.ConfigureServices(x => x.AddSingleton<IStartup>(Startup));
+            }
+            else
+            {
+                hostBuilder.ConfigureServices(x => x.AddSingleton<IStartup, TStartup>());
+            }
 
             // Set the urls to listen on
-            if (Urls != null && Urls.Length > 0) hostBuilder.UseUrls(Urls);
+            if (Urls != null && Urls.Length > 0)
+            {
+                hostBuilder.UseUrls(Urls);
+            }
 
             // Apply additional host configuration
             ConfigureHost(hostBuilder);
