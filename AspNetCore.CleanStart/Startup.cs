@@ -90,6 +90,13 @@ namespace AspNetCore.CleanStart
         }
 
         /// <summary>
+        /// Invoked after the web host has completed shutting down.
+        /// </summary>
+        public virtual void OnShutdown()
+        {
+        }
+
+        /// <summary>
         ///     Create the <see cref="IConfigurationRoot" /> for <see cref="Configuration" />.
         /// </summary>
         /// <remarks>

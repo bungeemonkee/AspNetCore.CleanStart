@@ -131,6 +131,9 @@ namespace AspNetCore.CleanStart
             // Create the actual host instance
             var host = hostBuilder.Build();
 
+            // Get the startup instance actually used by the host
+            var startup = (TStartup)host.Services.GetRequiredService<IStartup>();
+
             // Begin web host execution
             if (token == CancellationToken.None)
             {
@@ -142,6 +145,9 @@ namespace AspNetCore.CleanStart
                 // Run the server with a token to tell it when to quit
                 await host.RunAsync(token);
             }
+
+            // Now that the server is shutdown invoke the shutdown method on the startup class
+            startup.OnShutdown();
         }
 
         /// <summary>

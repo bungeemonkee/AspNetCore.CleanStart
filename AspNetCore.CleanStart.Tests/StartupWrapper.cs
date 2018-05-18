@@ -14,11 +14,20 @@ namespace AspNetCore.CleanStart.Tests
 
         public int ConfigureConfigurationCallCount { get; private set; }
 
+        public int OnShutdownCallCount { get; private set; }
+
         protected override IConfigurationRoot ConfigureConfiguration(ConfigurationBuilder configurationBuilder)
         {
             ++ConfigureConfigurationCallCount;
 
             return base.ConfigureConfiguration(configurationBuilder);
+        }
+
+        public override void OnShutdown()
+        {
+            ++OnShutdownCallCount;
+
+            base.OnShutdown();
         }
     }
 }
