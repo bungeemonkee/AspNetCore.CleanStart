@@ -80,6 +80,8 @@ namespace AspNetCore.CleanStart
         /// <returns>The <see cref="IServiceCollection" /> for the application.</returns>
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IStartup>(this);
+
             services.AddLogging(ConfigureLogging);
 
             var mvc = services.AddMvc(ConfigureMvcOptions);
