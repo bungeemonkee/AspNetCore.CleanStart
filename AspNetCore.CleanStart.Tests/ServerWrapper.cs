@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AspNetCore.CleanStart.Tests
 {
+    [ExcludeFromCodeCoverage]
     public class ServerWrapper: Server<Startup>
     {
         public ServerWrapper(string[] urls)

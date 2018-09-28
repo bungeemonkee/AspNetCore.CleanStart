@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AspNetCore.CleanStart.Tests
 {
+    [ExcludeFromCodeCoverage]
     public class StartupWrapper: Startup
     {
         public StartupWrapper(IHostingEnvironment environment)

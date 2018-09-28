@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Moq;
 namespace AspNetCore.CleanStart.Tests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class ServerTests
     {
         [TestMethod]
