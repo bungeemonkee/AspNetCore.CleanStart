@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.CleanStart", "AspNetCore.CleanStart\AspNetCore.CleanStart.csproj", "{55B34026-A85A-4E97-845B-8BB40E3A744A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.CleanStart", "AspNetCore.CleanStart\AspNetCore.CleanStart.csproj", "{55B34026-A85A-4E97-845B-8BB40E3A744A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{92653371-F05B-4E67-A1FC-601857896300}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.CleanStart.Tests", "AspNetCore.CleanStart.Tests\AspNetCore.CleanStart.Tests.csproj", "{EF53D9F3-039B-47BA-BEE3-BA8A9A1BA372}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.CleanStart.Tests", "AspNetCore.CleanStart.Tests\AspNetCore.CleanStart.Tests.csproj", "{EF53D9F3-039B-47BA-BEE3-BA8A9A1BA372}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,5 +49,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {677EC9D4-46B3-458E-8319-5A3FB56D299F}
 	EndGlobalSection
 EndGlobal
